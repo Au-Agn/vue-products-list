@@ -30,9 +30,11 @@
 
 <script>
 export default {
-  data: () => ({
-    count: 10
-  })
+  computed: {
+    count() {
+      return this.$store.getters.count
+    }
+  }
 }
 </script>
 

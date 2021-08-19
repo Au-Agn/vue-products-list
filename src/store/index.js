@@ -10,15 +10,20 @@ export default createStore({
         price: { value: 2000, currency: 'RUB'},
         img: 'https://slimages.macysassets.com/is/image/MCY/products/5/optimized/18963395_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$&fmt=webp'
       }
-    ]
+    ],
+    count: 0
   },
   mutations: {
+    increment(state) {
+      state.count++;
+    }
   },
   actions: {
   },
   modules: {
   },
   getters: {
-    products: st => st.products
+    products: st => st.products,
+    count: st => st.count
   }
 })
