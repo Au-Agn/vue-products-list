@@ -3,8 +3,10 @@
     <div v-if="product">
       <div class="grid-x grid-padding-y">
         <div class="cell medium-4">
-          <div>
-            <img v-bind:src="product.img" />
+          <div class="container">
+          <div class="container__zoomer" @mousemove="onZoomProduct" v-bind:style="{'background-image': `url(${product.img})`}">
+            <img class="zoomerImage" v-bind:src="product.img" />
+          </div>
           </div>
         </div>
         <div class="cell medium-7 text">
@@ -48,6 +50,14 @@ export default {
     addToBag() {
       return this.$store.commit("increment");
     },
+    onZoomProduct(e) {
+    const zoomer = e.currentTarget;
+    const offsetX = e.offsetX;
+    const offsetY = e.offsetY;
+    const x = offsetX / zoomer.offsetWidth * 100;
+    const y = offsetY / zoomer.offsetHeight * 100;
+    zoomer.style.backgroundPosition = x + '% ' + y + '%';
+    }
   }
 };
 </script>
@@ -58,5 +68,25 @@ export default {
 }
 .price {
   color: red;
+}
+.container {
+  overflow: hidden;
+
+  &__zoomer {
+    background-position: 50% 50%;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    cursor: zoom-in;
+    height: 100%;
+  }
+}
+
+.zoomerImage {
+  display: block;
+
+  &:hover {
+    opacity: 0;
+  }
 }
 </style>
