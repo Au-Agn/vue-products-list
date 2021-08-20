@@ -2,7 +2,7 @@
   <div>
     <h1>List</h1>
     <hr />
-    <table v-if="products.length">
+    <table v-if="products.length" class="unstriped hover">
       <thead>
         <tr>
           <th>Image</th>
@@ -44,11 +44,17 @@
 
 <script>
 export default {
-  computed: {
-    products() {
-      return this.$store.getters.products;
-    },
+  data() {
+    return {
+      products: []
+    }
   },
+  mounted() {
+    fetch('http://localhost:3000/data')
+      .then(res => res.json())
+      .then(data => this.products = data)
+      .catch(err => console.log(err.message))
+  }
 };
 </script>
 
