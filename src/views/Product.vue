@@ -41,10 +41,20 @@ export default {
   },
   mounted() {
     const id = +this.$route.params.id;
+    if (id) {
     fetch(`http://localhost:3000/data/${id}`)
       .then(res => res.json())
       .then(data => this.product = data)
       .catch(err => console.log(err.message))
+    } else {
+      fetch('http://localhost:3000/data')
+      .then(res => res.json())
+      .then(data => {
+        const randomProduct = data[Math.floor(Math.random() * data.length)];
+        this.product = randomProduct
+        })
+      .catch(err => console.log(err.message))
+    }
   }, 
   methods: {
     addToBag() {
