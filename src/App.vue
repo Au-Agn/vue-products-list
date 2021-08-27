@@ -1,14 +1,17 @@
 <template>
-  <Navbar />
-  <div class="grid-container">
-    <router-view />
+  <div id="app">
+    <Header />
+      <div class="grid-container">
+        <router-view />
+      </div>
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/Navbar";
+import Header from "@/components/header";
 export default {
-  components: { Navbar },
+  name: "app",
+  components: { Header },
 };
 </script>
 
