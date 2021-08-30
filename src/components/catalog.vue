@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid-x wrap">
+    <div class="grid-x align-middle wrap">
       <div class="cell small-6">
         <div class="grid-x">
           <input
@@ -15,12 +15,40 @@
           ></button>
         </div>
       </div>
+      <div class="cell small-6">
+        <div class="grid-x align-right">
+          <div class="dropdown menu">
+            <button
+              @click="areOptionsVisible = !areOptionsVisible"
+              class="button"
+            >
+              Sort by
+            </button>
+            <div
+              class="options"
+              :style="{ display: areOptionsVisible ? 'block' : 'none' }"
+            >
+              <p
+                class="options__item"
+                @click="sortByPrice(true)"
+              >
+                Price: Low to High
+              </p>
+              <p
+                class="options__item"
+                @click="sortByPrice(false)"
+              >
+                Price: High to Low
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <hr />
-    <table
+    <table 
       v-if="filteredProducts.length"
-      class="unstriped hover"
-    >
+      class="unstriped hover">
       <thead>
         <tr>
           <th>Image</th>
@@ -64,6 +92,7 @@ export default {
       sortedProducts: [],
       maxItemPerPage: 2,
       pageNumber: 1,
+      areOptionsVisible: false,
     };
   },
   computed: {
@@ -81,12 +110,17 @@ export default {
     itemPerPage() {
       let from = (this.pageNumber - 1) * this.maxItemPerPage;
       let to = from + this.maxItemPerPage;
-      return this.filteredProducts.slice(from, to);
+
+      if (this.filteredProducts.length <= this.maxItemPerPage) {
+        return this.filteredProducts.slice(0, this.maxItemPerPage);
+      } else {
+        return this.filteredProducts.slice(from, to);
+      }
     },
   },
   methods: {
     ...mapActions(["getProducts"]),
-    sortProductsBySearchValue(value) {
+    search(value) {
       if (value) {
         this.sortedProducts = this.products.filter((item) => {
           return item.name.toLowerCase().includes(value.toLowerCase());
@@ -95,17 +129,28 @@ export default {
         return (this.sortedProducts = this.products);
       }
     },
-    search(value) {
-      this.sortProductsBySearchValue(value);
-    },
     changePage(page) {
       this.pageNumber = page;
+    },
+    sortByName() {
+      return this.filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+    },
+    sortByPrice(value) {
+      if (value) {
+        return this.filteredProducts.sort(
+          (a, b) => a.price.value - b.price.value
+        );
+      } else {
+        return this.filteredProducts.sort(
+          (a, b) => b.price.value - a.price.value
+        );
+      }
     },
   },
   watch: {
     searchValue(value) {
       if (!value.length) {
-        this.sortProductsBySearchValue(this.searchValue);
+        this.search(this.searchValue);
       }
     },
   },
@@ -140,6 +185,23 @@ export default {
     background: #1779ba;
     color: #fefefe;
     cursor: pointer;
+  }
+}
+.options {
+  border: solid 1px #aeaeae;
+  background: #ffffff;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  padding: 10px;
+  width: 170px;
+
+  &__item {
+    padding: 2px 5px;
+    cursor: pointer;
+  }
+  &__item:hover {
+    background: #e6e6e6;
   }
 }
 </style>
