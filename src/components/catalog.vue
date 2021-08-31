@@ -1,54 +1,16 @@
 <template>
   <div>
     <div class="grid-x align-middle wrap">
-      <div class="cell small-6">
-        <div class="grid-x">
-          <input
-            class="cell shrink"
-            type="text"
-            v-model="searchValue"
-            @keypress.enter="search(searchValue)"
-          />
-          <button
-            class="btn cell small-1"
-            @click="search(searchValue)"
-          ></button>
-        </div>
-      </div>
-      <div class="cell small-6">
-        <div class="grid-x align-right">
-          <div class="dropdown menu">
-            <button
-              @click="areOptionsVisible = !areOptionsVisible"
-              class="button"
-            >
-              Sort by
-            </button>
-            <div
-              class="options"
-              :style="{ display: areOptionsVisible ? 'block' : 'none' }"
-            >
-              <p
-                class="options__item"
-                @click="sortByPrice(true)"
-              >
-                Price: Low to High
-              </p>
-              <p
-                class="options__item"
-                @click="sortByPrice(false)"
-              >
-                Price: High to Low
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Searcher
+        :productsData="products"
+        @searchValue="showSearchValue"
+      />
+      <Selector
+        :productsData="filteredProducts"
+      />
     </div>
     <hr />
-    <table 
-      v-if="filteredProducts.length"
-      class="unstriped hover">
+    <table v-if="filteredProducts.length" class="unstriped hover">
       <thead>
         <tr>
           <th>Image</th>
@@ -82,17 +44,18 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import CatalogItem from "./catalog-item";
+import Searcher from "./searcher";
+import Selector from "./selector";
 
 export default {
   name: "Catalog",
-  components: { CatalogItem },
+  components: { CatalogItem, Searcher, Selector },
   data() {
     return {
       searchValue: "",
       sortedProducts: [],
       maxItemPerPage: 2,
       pageNumber: 1,
-      areOptionsVisible: false,
     };
   },
   computed: {
@@ -120,38 +83,11 @@ export default {
   },
   methods: {
     ...mapActions(["getProducts"]),
-    search(value) {
-      if (value) {
-        this.sortedProducts = this.products.filter((item) => {
-          return item.name.toLowerCase().includes(value.toLowerCase());
-        });
-      } else {
-        return (this.sortedProducts = this.products);
-      }
-    },
     changePage(page) {
       this.pageNumber = page;
     },
-    sortByName() {
-      return this.filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-    },
-    sortByPrice(value) {
-      if (value) {
-        return this.filteredProducts.sort(
-          (a, b) => a.price.value - b.price.value
-        );
-      } else {
-        return this.filteredProducts.sort(
-          (a, b) => b.price.value - a.price.value
-        );
-      }
-    },
-  },
-  watch: {
-    searchValue(value) {
-      if (!value.length) {
-        this.search(this.searchValue);
-      }
+    showSearchValue(data) {
+      this.sortedProducts = data;
     },
   },
   mounted() {
@@ -161,15 +97,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.btn {
-  cursor: pointer;
-  &:after {
-    content: "\1F50D";
-  }
-}
-.search {
-  margin-right: 30px;
-}
 .wrap {
   padding-top: 35px;
 }
@@ -185,23 +112,6 @@ export default {
     background: #1779ba;
     color: #fefefe;
     cursor: pointer;
-  }
-}
-.options {
-  border: solid 1px #aeaeae;
-  background: #ffffff;
-  position: absolute;
-  top: 40px;
-  right: 0;
-  padding: 10px;
-  width: 170px;
-
-  &__item {
-    padding: 2px 5px;
-    cursor: pointer;
-  }
-  &__item:hover {
-    background: #e6e6e6;
   }
 }
 </style>
