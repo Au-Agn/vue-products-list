@@ -37,7 +37,7 @@ export default {
       } else {
         return this.$emit(
           "searchValue",
-          (this.filteredProducts = this.productsData)
+          (this.filteredProducts = [])
         );
       }
     },

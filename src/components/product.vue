@@ -28,7 +28,7 @@
           <div>
             <p>{{ itemProduct.description }}</p>
           </div>
-          <button class="button btn-add" @click="addToBag">Add to Bag</button>
+          <button class="button btn-add" @click="addToCart">Add to Bag</button>
         </div>
       </div>
     </div>
@@ -60,10 +60,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["getItemProduct", "getProducts"]),
-    addToBag(val) {
-      console.log();
-      return this.$store.commit("increment");
+    ...mapActions(["getItemProduct", "getProducts", "addProductToCart"]),
+    addToCart() {
+      this.addProductToCart(this.itemProduct);
     },
     onZoomProduct(e) {
       const zoomer = e.currentTarget;
