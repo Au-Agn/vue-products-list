@@ -1,17 +1,13 @@
 <template>
   <tr>
     <td class="image">
-      <router-link
-        :to="'/product/' + productData.id"
-      >
+      <router-link :to="'/product/' + productData.id">
         <img :src="productData.img" />
       </router-link>
     </td>
     <td>
       <div>
-        <router-link
-          :to="'/product/' + productData.id"
-        >
+        <router-link :to="'/product/' + productData.id">
           <h2>
             {{ productData.name }}
           </h2>

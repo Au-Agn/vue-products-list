@@ -5,7 +5,6 @@ export default createStore({
     products: [],
     cart: [],
     product: null,
-    count: 0,
   },
   mutations: {
     setProducts: (state, products) => {
@@ -20,6 +19,7 @@ export default createStore({
         state.cart.map((item) => {
           if (item.id === product.id) {
             isProductExists = true;
+            item.quantity++;
           }
         });
         if (!isProductExists) {
@@ -31,6 +31,14 @@ export default createStore({
     },
     removeFromCart: (state, index) => {
       state.cart.splice(index, 1);
+    },
+    increment: (state, index) => {
+      state.cart[index].quantity++;
+    },
+    decrement: (state, index) => {
+      if(state.cart[index].quantity >1) {
+        state.cart[index].quantity--;
+      }
     },
   },
   actions: {
@@ -51,6 +59,12 @@ export default createStore({
     },
     deleteProductFromCart({ commit }, index) {
       commit("removeFromCart", index);
+    },
+    incrementCartItem({ commit }, index) {
+      commit("increment", index);
+    },
+    decrementCartItem({ commit }, index) {
+      commit("decrement", index);
     },
   },
   getters: {

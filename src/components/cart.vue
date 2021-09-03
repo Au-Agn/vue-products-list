@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrap">
     <h2>Shopping bag</h2>
     <hr />
     <div class="grid-x">
@@ -12,6 +12,8 @@
                 :key="item.id"
                 :product="item"
                 @deleteFromCart="deleteFromCart(index)"
+                @incrementItem="incrementItem(index)"
+                @decrementItem="decrementItem(index)"
               />
             </tbody>
           </table>
@@ -20,13 +22,22 @@
       </div>
     </div>
     <hr />
-    <div>
-      <p>Total:</p>
-      <span>0 Rub</span>
+    <div class="grid-x align-middle">
+      <div class="cell small-6">
+        <span>Total:</span>&nbsp;
+        <span>{{ totalCost }}</span>
+      </div>
+      <div class="cell small-6">
+        <div class="grid-x align-right">
+          <button
+            class="button btn-add"
+            :class="{ disabled: cart.length === 0 }"
+          >
+            Proceed to checkout
+          </button>
+        </div>
+      </div>
     </div>
-    <button class="button btn-add" :class="{ disabled: cart.length === 0 }">
-      Proceed to checkout
-    </button>
   </div>
 </template>
 
@@ -37,21 +48,44 @@ import CartItem from "./cart-item";
 export default {
   name: "Cart",
   components: { CartItem },
-  data() {
-    return {};
-  },
   computed: {
     ...mapGetters(["cart"]),
+    totalCost() {
+      let result = [];
+      if (this.cart.length) {
+        this.cart.forEach((item) => {
+          result.push(item.price.value * item.quantity);
+        });
+        result = result.reduce((sum, el) => {
+          return sum + el;
+        });
+        return result;
+      } else {
+        return 0;
+      }
+    },
   },
-  props: {},
   methods: {
-    ...mapActions(["deleteProductFromCart"]),
+    ...mapActions([
+      "deleteProductFromCart",
+      "incrementCartItem",
+      "decrementCartItem",
+    ]),
     deleteFromCart(index) {
       this.deleteProductFromCart(index);
     },
+    incrementItem(index) {
+      this.incrementCartItem(index);
+    },
+    decrementItem(index) {
+      this.decrementCartItem(index);
+    },
   },
-  watch: {},
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.wrap{
+  margin-top: 20px;
+}
+</style>

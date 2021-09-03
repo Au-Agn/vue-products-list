@@ -8,6 +8,7 @@
                 "value": "1000",
                 "currency": "RUB"
             },
+            "quantity":"1",
             "img": "https://slimages.macysassets.com/is/image/MCY/products/5/optimized/18963395_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$&fmt=webp"
         },
         {
@@ -18,6 +19,7 @@
                 "value": "2000",
                 "currency": "RUB"
             },
+            "quantity":"1",
             "img": "https://slimages.macysassets.com/is/image/MCY/products/5/optimized/18963395_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$&fmt=webp"
         },
         {
@@ -28,6 +30,7 @@
                 "value": "1500",
                 "currency": "RUB"
             },
+            "quantity":"1",
             "img": "https://slimages.macysassets.com/is/image/MCY/products/5/optimized/18963395_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$&fmt=webp"
         },
         {
@@ -38,6 +41,7 @@
                 "value": "2400",
                 "currency": "RUB"
             },
+            "quantity":"1",
             "img": "https://slimages.macysassets.com/is/image/MCY/products/5/optimized/18963395_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$&fmt=webp"
         }
         ]

@@ -10,13 +10,13 @@
         </h4>
       </div>
       <div class="quantity">
-        <button class="hollow button tiny">-</button>
-        <div>0</div>
-        <button class="hollow button tiny">+</button>
+        <button class="hollow button tiny" @click="decrementItem">-</button>
+        <div>{{ product.quantity }}</div>
+        <button class="hollow button tiny" @click="incrementItem">+</button>
       </div>
     </td>
     <td>
-      <span>{{ product.price.value }}</span
+      <span>{{ commonProductCost }}</span
       >&nbsp;
       <span>{{ product.price.currency }}</span>
     </td>
@@ -29,22 +29,25 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "CartItem",
-  data() {
-    return {};
-  },
   props: {
     product: {},
   },
   computed: {
-    ...mapGetters(["count"]),
+    commonProductCost() {
+      return this.product.price.value * this.product.quantity;
+    },
   },
   methods: {
     deleteFromCart() {
       this.$emit("deleteFromCart");
+    },
+    incrementItem() {
+      this.$emit("incrementItem");
+    },
+    decrementItem() {
+      this.$emit("decrementItem");
     },
   },
 };

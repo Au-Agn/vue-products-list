@@ -30,7 +30,12 @@ export default {
     };
   },
   props: {
-    productsData: [],
+    productsData: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
   },
   methods: {
     sortByName() {
@@ -48,7 +53,6 @@ export default {
       }
     },
   },
-  watch: {},
 };
 </script>
 

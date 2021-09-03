@@ -25,7 +25,12 @@ export default {
     };
   },
   props: {
-    productsData: [],
+    productsData: {
+      type: Array,
+      default() {
+        return []
+      }
+    },
   },
   methods: {
     search(value) {
