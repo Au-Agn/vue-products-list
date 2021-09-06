@@ -29,7 +29,10 @@
 export default {
   name: "CatalogItem",
   props: {
-    productData: {},
+    productData: {
+      type: Object,
+      default: {}
+    },
   },
 };
 </script>

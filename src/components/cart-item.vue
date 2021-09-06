@@ -32,7 +32,10 @@
 export default {
   name: "CartItem",
   props: {
-    product: {},
+    product: {
+      type: Object,
+      default: {}
+    },
   },
   computed: {
     commonProductCost() {

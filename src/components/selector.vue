@@ -32,9 +32,7 @@ export default {
   props: {
     productsData: {
       type: Array,
-      default() {
-        return []
-      }
+      default: []
     },
   },
   methods: {
