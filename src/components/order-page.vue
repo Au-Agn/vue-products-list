@@ -19,55 +19,94 @@
         <section class="modal__body">
           <slot name="body">
             <h5>Delivery</h5>
-            <form id="cart" @submit.prevent="checkForm">
+            <form id="cart" @submit.prevent="checkForm" novalidate="true">
               <div class="bodyForm">
                 <input
                   id="email"
                   name="email"
                   type="email"
                   placeholder="Email"
-                  v-model="formValues.email"
-                  :class="{ error: isFormInvalid }"
+                  v-model.trim="v$.email.$model"
+                  :class="{ error: v$.email.$errors.length }"
                 />
-                <small class="helper-text" :class="{ invalid: isFormInvalid }">
-                  Email address is required
+                <small
+                  class="helper-text"
+                  :class="{ invalid: v$.email.$errors.length }"
+                  v-for="(error, index) of v$.email.$errors"
+                  :key="index"
+                >
+                  {{ error.$message }}
                 </small>
                 <input
                   id="firstName"
                   name="firstName"
                   type="text"
                   placeholder="First Name"
-                  v-model="formValues.firstName"
-                  :class="{ error: isFormInvalid }"
+                  v-model.trim="v$.firstName.$model"
+                  :class="{ error: v$.firstName.$errors.length }"
                 />
-                <small class="helper-text" :class="{ invalid: isFormInvalid }">
-                  First Name is required
+                <small
+                  class="helper-text"
+                  :class="{ invalid: v$.firstName.$errors.length }"
+                  v-for="(error, index) of v$.firstName.$errors"
+                  :key="index"
+                >
+                  {{ error.$message }}
                 </small>
                 <input
                   id="lastName"
                   name="lastName"
                   type="text"
                   placeholder="Last Name"
-                  v-model="formValues.lastName"
+                  v-model.trim="lastName"
                 />
-                <input id="city" name="city" type="text" placeholder="City" />
+                <input
+                  id="city"
+                  name="city"
+                  type="text"
+                  placeholder="City"
+                  v-model.trim="v$.city.$model"
+                  :class="{ error: v$.city.$errors.length }"
+                />
+                <small
+                  class="helper-text"
+                  :class="{ invalid: v$.city.$errors.length }"
+                  v-for="(error, index) of v$.city.$errors"
+                  :key="index"
+                >
+                  {{ error.$message }}
+                </small>
                 <input
                   id="code"
                   name="code"
                   type="number"
                   placeholder="Postal Code"
-                  v-model="formValues.code"
+                  v-model.trim="v$.code.$model"
+                  :class="{ error: v$.code.$errors.length }"
                 />
+                <small
+                  class="helper-text"
+                  :class="{ invalid: v$.code.$errors.length }"
+                  v-for="(error, index) of v$.code.$errors"
+                  :key="index"
+                >
+                  {{ error.$message }}
+                </small>
                 <input
                   id="phone"
                   name="phone"
-                  type="tel"
+                  type="number"
                   placeholder="Phone"
-                  v-model="formValues.phone"
-                  :class="{ error: isFormInvalid }"
+                  v-model.trim="v$.phone.$model"
+                  :class="{ error: v$.phone.$errors.length }"
                 />
-                <small class="helper-text" :class="{ invalid: isFormInvalid }">
-                  Phone is required
+                <small
+                  class="helper-text"
+                  :class="{ invalid: v$.phone.$errors.length }"
+                  v-for="(error, index) of v$.phone.$errors"
+                  :key="index"
+                >
+                  {{ error.$message }}
                 </small>
               </div>
               <dev class="footerForm grid-x align-right">
@@ -82,19 +121,29 @@
 </template>
 
 <script>
+import useVuelidate from "@vuelidate/core";
+import { email, required, minLength } from "@vuelidate/validators";
+
 export default {
   name: "OrderPage",
   data() {
     return {
-      formValues: {
-        email: null,
-        firstName: null,
-        lastName: null,
-        code: null,
-        phone: null,
-      },
-      requiredFields: ["phone", "firstName", "email"],
-      isFormInvalid: false,
+      email: "",
+      firstName: "",
+      lastName: "",
+      city: "",
+      code: "",
+      phone: "",
+    };
+  },
+  setup: () => ({ v$: useVuelidate() }),
+  validations() {
+    return {
+      email: { required, email },
+      firstName: { required },
+      city: { required },
+      code: { required },
+      phone: { required, minLength: minLength(6) },
     };
   },
   computed: {},
@@ -103,10 +152,13 @@ export default {
       this.$emit("close");
     },
     checkForm() {
-      this.isFormInvalid = this.requiredFields
-        .map((fieldName) => this.formValues[fieldName])
-        .every((value) => !value);
-      console.log(this.isFormInvalid);
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
+    },
+    validatePhone() {
+      console.log(123);
     },
   },
 };
@@ -152,7 +204,7 @@ export default {
 .helper-text {
   color: red;
   display: none;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .invalid {
   display: inline-block;
