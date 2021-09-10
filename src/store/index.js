@@ -5,6 +5,7 @@ export default createStore({
     products: [],
     cart: [],
     product: null,
+    isOrderFormVisible: false,
   },
   mutations: {
     setProducts: (state, products) => {
@@ -36,9 +37,12 @@ export default createStore({
       state.cart[index].quantity++;
     },
     decrement: (state, index) => {
-      if(state.cart[index].quantity >1) {
+      if (state.cart[index].quantity > 1) {
         state.cart[index].quantity--;
       }
+    },
+    showForm: (state) => {
+      state.isOrderFormVisible = !state.isOrderFormVisible;
     },
   },
   actions: {
@@ -66,11 +70,15 @@ export default createStore({
     decrementCartItem({ commit }, index) {
       commit("decrement", index);
     },
+    changeFormVisibility({ commit }) {
+      commit("showForm");
+    },
   },
   getters: {
     count: (state) => state.count,
     products: (state) => state.products,
     product: (state) => state.product,
     cart: (state) => state.cart,
+    isOrderFormVisible: (state) => state.isOrderFormVisible,
   },
 });

@@ -32,7 +32,7 @@
           <button
             class="button btn-add"
             :class="{ disabled: cart.length === 0 }"
-            @click="showOrderPage"
+            @click="showOrderingPage"
           >
             Proceed to checkout
           </button>
@@ -40,27 +40,22 @@
       </div>
     </div>
   </div>
-  <OrderPage
-    v-if="isOrderPageVisible"
-    @close="closeOrderPage"
-  />
+  <OrderForm v-if="isOrderFormVisible" />
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import CartItem from "./cart-item";
-import OrderPage from "./order-page.vue";
+import OrderForm from "./order-form";
 
 export default {
   name: "Cart",
-  components: { CartItem, OrderPage },
+  components: { CartItem, OrderForm },
   data() {
-    return {
-      isOrderPageVisible: false,
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(["cart"]),
+    ...mapGetters(["cart", "isOrderFormVisible"]),
     totalCost() {
       let result = [];
       if (this.cart.length) {
@@ -81,6 +76,7 @@ export default {
       "deleteProductFromCart",
       "incrementCartItem",
       "decrementCartItem",
+      "changeFormVisibility",
     ]),
     deleteFromCart(index) {
       this.deleteProductFromCart(index);
@@ -91,11 +87,8 @@ export default {
     decrementItem(index) {
       this.decrementCartItem(index);
     },
-    showOrderPage() {
-      this.isOrderPageVisible = true;
-    },
-    closeOrderPage() {
-      this.isOrderPageVisible = false;
+    showOrderingPage() {
+      this.changeFormVisibility();
     },
   },
 };

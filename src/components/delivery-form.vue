@@ -26,13 +26,13 @@
                   name="email"
                   type="email"
                   placeholder="Email"
-                  v-model.trim="v$.email.$model"
-                  :class="{ error: v$.email.$errors.length }"
+                  v-model.trim="formValues.email"
+                  :class="{ error: v$.formValues.email.$errors.length }"
                 />
                 <small
                   class="helper-text"
-                  :class="{ invalid: v$.email.$errors.length }"
-                  v-for="(error, index) of v$.email.$errors"
+                  :class="{ invalid: v$.formValues.email.$errors.length }"
+                  v-for="(error, index) of v$.formValues.email.$errors"
                   :key="index"
                 >
                   {{ error.$message }}
@@ -42,13 +42,13 @@
                   name="firstName"
                   type="text"
                   placeholder="First Name"
-                  v-model.trim="v$.firstName.$model"
-                  :class="{ error: v$.firstName.$errors.length }"
+                  v-model.trim="formValues.firstName"
+                  :class="{ error: v$.formValues.firstName.$errors.length }"
                 />
                 <small
                   class="helper-text"
-                  :class="{ invalid: v$.firstName.$errors.length }"
-                  v-for="(error, index) of v$.firstName.$errors"
+                  :class="{ invalid: v$.formValues.firstName.$errors.length }"
+                  v-for="(error, index) of v$.formValues.firstName.$errors"
                   :key="index"
                 >
                   {{ error.$message }}
@@ -58,20 +58,20 @@
                   name="lastName"
                   type="text"
                   placeholder="Last Name"
-                  v-model.trim="lastName"
+                  v-model.trim="formValues.lastName"
                 />
                 <input
                   id="city"
                   name="city"
                   type="text"
                   placeholder="City"
-                  v-model.trim="v$.city.$model"
-                  :class="{ error: v$.city.$errors.length }"
+                  v-model.trim="formValues.city"
+                  :class="{ error: v$.formValues.city.$errors.length }"
                 />
                 <small
                   class="helper-text"
-                  :class="{ invalid: v$.city.$errors.length }"
-                  v-for="(error, index) of v$.city.$errors"
+                  :class="{ invalid: v$.formValues.city.$errors.length }"
+                  v-for="(error, index) of v$.formValues.city.$errors"
                   :key="index"
                 >
                   {{ error.$message }}
@@ -81,13 +81,13 @@
                   name="code"
                   type="number"
                   placeholder="Postal Code"
-                  v-model.trim="v$.code.$model"
-                  :class="{ error: v$.code.$errors.length }"
+                  v-model.trim="formValues.code"
+                  :class="{ error: v$.formValues.code.$errors.length }"
                 />
                 <small
                   class="helper-text"
-                  :class="{ invalid: v$.code.$errors.length }"
-                  v-for="(error, index) of v$.code.$errors"
+                  :class="{ invalid: v$.formValues.code.$errors.length }"
+                  v-for="(error, index) of v$.formValues.code.$errors"
                   :key="index"
                 >
                   {{ error.$message }}
@@ -97,20 +97,26 @@
                   name="phone"
                   type="number"
                   placeholder="Phone"
-                  v-model.trim="v$.phone.$model"
-                  :class="{ error: v$.phone.$errors.length }"
+                  v-model.trim="formValues.phone"
+                  :class="{ error: v$.formValues.phone.$errors.length }"
                 />
                 <small
                   class="helper-text"
-                  :class="{ invalid: v$.phone.$errors.length }"
-                  v-for="(error, index) of v$.phone.$errors"
+                  :class="{ invalid: v$.formValues.phone.$errors.length }"
+                  v-for="(error, index) of v$.formValues.phone.$errors"
                   :key="index"
                 >
                   {{ error.$message }}
                 </small>
               </div>
               <dev class="footerForm grid-x align-right">
-                <button type="submit" class="button primary">Continue</button>
+                <button
+                  type="submit"
+                  class="button primary"
+                  @click="openPayForm"
+                >
+                  Continue
+                </button>
               </dev>
             </form>
           </slot>
@@ -125,40 +131,45 @@ import useVuelidate from "@vuelidate/core";
 import { email, required, minLength } from "@vuelidate/validators";
 
 export default {
-  name: "OrderPage",
+  setup: () => ({ v$: useVuelidate() }),
+  name: "DeliveryForm",
   data() {
     return {
-      email: "",
-      firstName: "",
-      lastName: "",
-      city: "",
-      code: "",
-      phone: "",
+      formValues: {
+        email: "",
+        firstName: "",
+        lastName: "",
+        city: "",
+        code: "",
+        phone: "",
+      },
     };
   },
-  setup: () => ({ v$: useVuelidate() }),
   validations() {
     return {
-      email: { required, email },
-      firstName: { required },
-      city: { required },
-      code: { required },
-      phone: { required, minLength: minLength(6) },
+      formValues: {
+        email: { required, email },
+        firstName: { required },
+        city: { required },
+        code: { required },
+        phone: { required, minLength: minLength(6) },
+      },
     };
   },
-  computed: {},
   methods: {
     close() {
       this.$emit("close");
+    },
+    openPayForm() {
+      if (!this.v$.$invalid) {
+        this.$emit("openPayForm", this.formValues);
+      }
     },
     checkForm() {
       if (this.v$.$invalid) {
         this.v$.$touch();
         return;
       }
-    },
-    validatePhone() {
-      console.log(123);
     },
   },
 };
