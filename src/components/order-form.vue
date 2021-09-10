@@ -3,6 +3,7 @@
     v-if="isDeliveryFormVisible"
     @close="closeForm"
     @openPayForm="openPayForm"
+    :deliveryFormValues="deliveryFormValues"
   />
   <PaymentForm
     v-if="isPaymentFormVisible"

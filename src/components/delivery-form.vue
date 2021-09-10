@@ -135,7 +135,7 @@ export default {
   name: "DeliveryForm",
   data() {
     return {
-      formValues: {
+      form: {
         email: "",
         firstName: "",
         lastName: "",
@@ -144,6 +144,22 @@ export default {
         phone: "",
       },
     };
+  },
+  props: {
+    deliveryFormValues: {
+      type: Object,
+      default: null,
+    },
+  },
+  computed: {
+    formValues() {
+      if (this.deliveryFormValues) {
+        this.from = this.deliveryFormValues;
+        return this.deliveryFormValues;
+      } else {
+        return this.form;
+      }
+    },
   },
   validations() {
     return {
