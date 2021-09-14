@@ -40,22 +40,20 @@
       </div>
     </div>
   </div>
-  <OrderForm v-if="isOrderFormVisible" />
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import CartItem from "./cart-item";
-import OrderForm from "./order-form";
 
 export default {
   name: "Cart",
-  components: { CartItem, OrderForm },
+  components: { CartItem },
   data() {
     return {};
   },
   computed: {
-    ...mapGetters(["cart", "isOrderFormVisible"]),
+    ...mapGetters(["cart"]),
     totalCost() {
       let result = [];
       if (this.cart.length) {
