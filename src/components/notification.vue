@@ -1,7 +1,7 @@
 <template>
   <div class="notification">
     <NotificationItem
-      v-for="(notification, index) in notifications"
+      v-for="(notification, index) in NOTIFICATIONS"
       :key="index"
       :notification="notification"
       :id="index"
@@ -17,7 +17,7 @@ export default {
   name: "Notification",
   components: { NotificationItem },
   computed: {
-    ...mapGetters(["notifications"]),
+    ...mapGetters(["NOTIFICATIONS"]),
   },
 };
 </script>

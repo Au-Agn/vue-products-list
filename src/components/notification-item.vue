@@ -18,11 +18,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["removeNotification"]),
+    ...mapActions(["REMOVE_NOTIFICATION"]),
   },
   created() {
     setTimeout(() => {
-      this.removeNotification();
+      this.REMOVE_NOTIFICATION();
     }, 2500);
   },
 };
