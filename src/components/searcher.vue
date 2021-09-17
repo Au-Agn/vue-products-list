@@ -13,7 +13,7 @@
           :style="{ display: searchValue ? 'block' : 'none' }"
           type="image"
           src="https://img.icons8.com/material-sharp/24/cacaca/multiply.png"
-          @click="clean()"
+          @click="clean"
         />
       </div>
       <div class="cell shrink btn__search">
@@ -48,19 +48,20 @@ export default {
         this.filteredProducts = this.productsData.filter((item) => {
           return item.name.toLowerCase().includes(value.toLowerCase());
         });
-        this.$emit("searchValue", this.filteredProducts);
+        this.$emit("showSearchValue", this.filteredProducts);
       } else {
-        return this.$emit("searchValue", (this.filteredProducts = []));
+        return this.$emit("showSearchValue", null);
       }
     },
     clean() {
       this.searchValue = "";
+      this.$emit("showSearchValue", null);
     },
   },
   watch: {
     searchValue(value) {
       if (!value.length) {
-        this.search(this.searchValue);
+        this.clean();
       }
     },
   },
