@@ -40,24 +40,17 @@
       </div>
     </div>
   </div>
-  <OrderPage
-    v-if="isOrderPageVisible"
-    @close="closeOrderPage"
-  />
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import CartItem from "./cart-item";
-import OrderPage from "./order-page.vue";
 
 export default {
   name: "Cart",
-  components: { CartItem, OrderPage },
+  components: { CartItem },
   data() {
-    return {
-      isOrderPageVisible: false,
-    };
+    return {};
   },
   computed: {
     ...mapGetters(["CART"]),
@@ -91,11 +84,8 @@ export default {
     decrementItem(index) {
       this.DECREMENT_CART_ITEM(index);
     },
-    showOrderPage() {
-      this.isOrderPageVisible = true;
-    },
-    closeOrderPage() {
-      this.isOrderPageVisible = false;
+    showOrderingPage() {
+      this.changeFormVisibility();
     },
   },
 };
