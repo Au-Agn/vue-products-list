@@ -2,7 +2,7 @@
   <div>
     <div class="grid-x align-middle wrap">
       <Searcher
-        :productsData="products"
+        :productsData="PRODUCTS"
         @searchValue="showSearchValue"
       />
       <Selector
@@ -59,12 +59,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["products"]),
+    ...mapGetters(["PRODUCTS"]),
     filteredProducts() {
       if (this.sortedProducts.length) {
         return this.sortedProducts;
       } else {
-        return this.products;
+        return this.PRODUCTS;
       }
     },
     pages() {
@@ -82,7 +82,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["getProducts"]),
+    ...mapActions(["GET_PRODUCTS"]),
     changePage(page) {
       this.pageNumber = page;
     },
@@ -91,7 +91,7 @@ export default {
     },
   },
   mounted() {
-    this.getProducts();
+    this.GET_PRODUCTS();
   },
 };
 </script>

@@ -5,10 +5,10 @@
     <div class="grid-x">
       <div class="cell">
         <div class="grid-x">
-          <table v-if="cart.length" class="unstriped hover">
+          <table v-if="CART.length" class="unstriped hover">
             <tbody>
               <CartItem
-                v-for="(item, index) in cart"
+                v-for="(item, index) in CART"
                 :key="item.id"
                 :product="item"
                 @deleteFromCart="deleteFromCart(index)"
@@ -31,7 +31,7 @@
         <div class="grid-x align-right">
           <button
             class="button btn-add"
-            :class="{ disabled: cart.length === 0 }"
+            :class="{ disabled: CART.length === 0 }"
             @click="showOrderPage"
           >
             Proceed to checkout
@@ -60,11 +60,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["cart"]),
+    ...mapGetters(["CART"]),
     totalCost() {
       let result = [];
-      if (this.cart.length) {
-        this.cart.forEach((item) => {
+      if (this.CART.length) {
+        this.CART.forEach((item) => {
           result.push(item.price.value * item.quantity);
         });
         result = result.reduce((sum, el) => {
@@ -78,18 +78,18 @@ export default {
   },
   methods: {
     ...mapActions([
-      "deleteProductFromCart",
-      "incrementCartItem",
-      "decrementCartItem",
+      "DELETE_PRODUCT_FROM_CART",
+      "INCREMENT_CART_ITEM",
+      "DECREMENT_CART_ITEM",
     ]),
     deleteFromCart(index) {
-      this.deleteProductFromCart(index);
+      this.DELETE_PRODUCT_FROM_CART(index);
     },
     incrementItem(index) {
-      this.incrementCartItem(index);
+      this.INCREMENT_CART_ITEM(index);
     },
     decrementItem(index) {
-      this.decrementCartItem(index);
+      this.DECREMENT_CART_ITEM(index);
     },
     showOrderPage() {
       this.isOrderPageVisible = true;

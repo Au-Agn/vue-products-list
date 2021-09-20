@@ -146,7 +146,6 @@ export default {
       phone: { required, minLength: minLength(6) },
     };
   },
-  computed: {},
   methods: {
     close() {
       this.$emit("close");
@@ -156,9 +155,6 @@ export default {
         this.v$.$touch();
         return;
       }
-    },
-    validatePhone() {
-      console.log(123);
     },
   },
 };

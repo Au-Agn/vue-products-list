@@ -4,14 +4,16 @@
       <div class="grid-container">
         <router-view />
       </div>
+      <Notification />
   </div>
 </template>
 
 <script>
 import Header from "@/components/header";
+import Notification from '@/components/notification';
 export default {
   name: "app",
-  components: { Header },
+  components: { Header, Notification },
 };
 </script>
 

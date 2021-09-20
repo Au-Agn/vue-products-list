@@ -13,7 +13,7 @@
     </div>
     <router-link :to="'/cart'">
       <div class="grid-x align-right">
-        <div class="cell small-1">{{ cart.length }}</div>
+        <div class="cell small-1">{{ CART.length }}</div>
         <svg class="basket cell small-1" viewBox="0 0 24 24">
           <path
             fill="currentColor"
@@ -36,7 +36,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["cart"]),
+    ...mapGetters(["CART"]),
   },
 };
 </script>
