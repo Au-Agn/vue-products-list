@@ -47,22 +47,22 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["product", "products"]),
+    ...mapGetters(["PRODUCT", "PRODUCTS"]),
     itemProduct() {
       const id = +this.$route.params.id;
       if (id) {
-        return this.product;
+        return this.PRODUCT;
       } else {
-        const products = [...this.products];
+        const products = [...this.PRODUCTS];
         return (this.randomProduct =
           products[Math.floor(Math.random() * products.length)]);
       }
     },
   },
   methods: {
-    ...mapActions(["getItemProduct", "getProducts", "addProductToCart"]),
+    ...mapActions(["GET_ITEM_PRODUCT", "GET_PRODUCTS", "ADD_PRODUCT_TO_CART"]),
     addToCart() {
-      this.addProductToCart(this.itemProduct);
+      this.ADD_PRODUCT_TO_CART(this.itemProduct);
     },
     onZoomProduct(e) {
       const zoomer = e.currentTarget;
@@ -76,9 +76,9 @@ export default {
   mounted() {
     const id = +this.$route.params.id;
     if (id) {
-      this.getItemProduct(id);
+      this.GET_ITEM_PRODUCT(id);
     } else {
-      this.getProducts();
+      this.GET_PRODUCTS();
     }
   },
 };
