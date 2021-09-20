@@ -39,4 +39,7 @@ export default {
   DELETE_NOTIFICATION: (state, index) => {
     state.notifications.splice(index, 1);
   },
+  CHANGE_FORM_VISIBLE: (state) => {
+    state.isOrderFormVisible = !state.isOrderFormVisible;
+  },
 };

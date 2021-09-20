@@ -5,8 +5,8 @@
       <router-view />
     </div>
     <Notification />
+    <OrderForm v-if="IS_ORDERING_FORM_VISIBLE" />
   </div>
-  <OrderForm v-if="isOrderFormVisible" />
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
   name: "app",
   components: { Header, OrderForm, Notification },
   computed: {
-    ...mapGetters(["isOrderFormVisible"]),
+    ...mapGetters(["IS_ORDERING_FORM_VISIBLE"]),
   },
 };
 </script>
