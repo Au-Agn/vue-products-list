@@ -1,16 +1,28 @@
 <template>
   <div class="cell small-6">
-    <div class="grid-x">
-      <input
-        class="cell shrink"
-        type="text"
-        v-model="searchValue"
-        @keypress.enter="search(searchValue)"
-      />
-      <button
-        class="btn_search cell small-1"
-        @click="search(searchValue)"
-      ></button>
+    <div class="grid-x align-middle">
+      <div class="cell shrink wrapper">
+        <input
+          class="text-input"
+          type="text"
+          v-model="searchValue"
+          @keypress.enter="search(searchValue)"
+        />
+        <input
+          class="btn__delete"
+          :style="{ display: searchValue ? 'block' : 'none' }"
+          type="image"
+          src="https://img.icons8.com/material-sharp/24/cacaca/multiply.png"
+          @click="clean"
+        />
+      </div>
+      <div class="cell shrink btn__search">
+        <input
+          type="image"
+          src="https://img.icons8.com/ios-glyphs/30/1779ba/search--v1.png"
+          @click="search(searchValue)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -27,7 +39,7 @@ export default {
   props: {
     productsData: {
       type: Array,
-      default: []
+      default: [],
     },
   },
   methods: {
@@ -36,19 +48,20 @@ export default {
         this.filteredProducts = this.productsData.filter((item) => {
           return item.name.toLowerCase().includes(value.toLowerCase());
         });
-        this.$emit("searchValue", this.filteredProducts);
+        this.$emit("showSearchValue", this.filteredProducts);
       } else {
-        return this.$emit(
-          "searchValue",
-          (this.filteredProducts = [])
-        );
+        return this.$emit("showSearchValue", null);
       }
+    },
+    clean() {
+      this.searchValue = "";
+      this.$emit("showSearchValue", null);
     },
   },
   watch: {
     searchValue(value) {
       if (!value.length) {
-        this.search(this.searchValue);
+        this.clean();
       }
     },
   },
@@ -56,10 +69,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  position: relative;
+}
+.text-input {
+  width: 300px;
+}
 .btn {
-  cursor: pointer;
-  &_search:after {
-    content: "\1F50D";
+  &__delete {
+    display: none;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    right: 10px;
+  }
+  &__search {
+    margin-left: 8px;
   }
 }
 </style>

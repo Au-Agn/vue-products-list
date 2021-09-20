@@ -3,7 +3,7 @@
     <div class="grid-x align-middle wrap">
       <Searcher
         :productsData="PRODUCTS"
-        @searchValue="showSearchValue"
+        @showSearchValue="showSearchValue"
       />
       <Selector
         :productsData="filteredProducts"
@@ -52,8 +52,7 @@ export default {
   components: { CatalogItem, Searcher, Selector },
   data() {
     return {
-      searchValue: "",
-      sortedProducts: [],
+      sortedProducts: null,
       maxItemPerPage: 2,
       pageNumber: 1,
     };
@@ -61,7 +60,7 @@ export default {
   computed: {
     ...mapGetters(["PRODUCTS"]),
     filteredProducts() {
-      if (this.sortedProducts.length) {
+      if (this.sortedProducts) {
         return this.sortedProducts;
       } else {
         return this.PRODUCTS;
