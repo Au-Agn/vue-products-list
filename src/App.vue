@@ -4,6 +4,7 @@
     <div class="grid-container">
       <router-view />
     </div>
+    <Notification />
   </div>
   <OrderForm v-if="isOrderFormVisible" />
 </template>
@@ -12,10 +13,11 @@
 import { mapGetters } from "vuex";
 import Header from "@/components/header";
 import OrderForm from "@/components/order-form";
+import Notification from "@/components/notification";
 
 export default {
   name: "app",
-  components: { Header, OrderForm },
+  components: { Header, OrderForm, Notification },
   computed: {
     ...mapGetters(["isOrderFormVisible"]),
   },

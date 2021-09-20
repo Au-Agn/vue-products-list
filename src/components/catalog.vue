@@ -2,8 +2,8 @@
   <div>
     <div class="grid-x align-middle wrap">
       <Searcher
-        :productsData="products"
-        @searchValue="showSearchValue"
+        :productsData="PRODUCTS"
+        @showSearchValue="showSearchValue"
       />
       <Selector
         :productsData="filteredProducts"
@@ -52,19 +52,18 @@ export default {
   components: { CatalogItem, Searcher, Selector },
   data() {
     return {
-      searchValue: "",
-      sortedProducts: [],
+      sortedProducts: null,
       maxItemPerPage: 2,
       pageNumber: 1,
     };
   },
   computed: {
-    ...mapGetters(["products"]),
+    ...mapGetters(["PRODUCTS"]),
     filteredProducts() {
-      if (this.sortedProducts.length) {
+      if (this.sortedProducts) {
         return this.sortedProducts;
       } else {
-        return this.products;
+        return this.PRODUCTS;
       }
     },
     pages() {
@@ -82,7 +81,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["getProducts"]),
+    ...mapActions(["GET_PRODUCTS"]),
     changePage(page) {
       this.pageNumber = page;
     },
@@ -91,7 +90,7 @@ export default {
     },
   },
   mounted() {
-    this.getProducts();
+    this.GET_PRODUCTS();
   },
 };
 </script>
