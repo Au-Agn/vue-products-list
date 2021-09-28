@@ -39,7 +39,7 @@
                   name="cardNumber"
                   type="text"
                   placeholder="Card Number"
-                  v-model.trim="v$.cardNumber.$model"
+                  v-model.trim="cardNumber"
                   :class="{ error: v$.cardNumber.$errors.length }"
                 />
                 <small
@@ -56,7 +56,7 @@
                       name="validity"
                       type="text"
                       placeholder="MM / YY"
-                      v-model.trim="v$.validity.$model"
+                      v-model.trim="validity"
                       :class="{ error: v$.validity.$errors.length }"
                     />
                     <small
@@ -73,7 +73,7 @@
                       name="securityCode"
                       type="text"
                       placeholder="Security Code"
-                      v-model.trim="v$.securityCode.$model"
+                      v-model.trim="securityCode"
                       :class="{ error: v$.securityCode.$errors.length }"
                     />
                     <small
@@ -98,7 +98,7 @@
                       <button
                         type="submit"
                         class="button primary"
-                        @click="close"
+                        @click="order"
                       >
                         Place Order
                       </button>
@@ -142,11 +142,22 @@ export default {
     };
   },
   methods: {
+    order() {
+      if (!this.v$.$invalid) {
+        this.$emit("close");
+      }
+    },
     close() {
       this.$emit("close");
     },
     back() {
       this.$emit("back");
+    },
+    submitForm() {
+      if (this.v$.$invalid) {
+        this.v$.$touch();
+        return;
+      }
     },
   },
 };

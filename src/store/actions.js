@@ -44,4 +44,7 @@ export default {
   REMOVE_NOTIFICATION({ commit }, index) {
     commit("DELETE_NOTIFICATION", index);
   },
+  CHANGE_FORM_VISIBILITY({ commit }) {
+    commit("CHANGE_FORM_VISIBLE");
+  },
 };

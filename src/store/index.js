@@ -10,6 +10,7 @@ export default createStore({
     product: null,
     notifications: [],
     isProductExists: false,
+    isOrderFormVisible: false
   },
   mutations,
   actions,

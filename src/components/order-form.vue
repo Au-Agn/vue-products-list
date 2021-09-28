@@ -28,13 +28,10 @@ export default {
       deliveryFormValues: null,
     };
   },
-  computed: {
-    ...mapGetters(["isOrderFormVisible"]),
-  },
   methods: {
-    ...mapActions(["changeFormVisibility"]),
+    ...mapActions(["CHANGE_FORM_VISIBILITY"]),
     closeForm() {
-      this.changeFormVisibility();
+      this.CHANGE_FORM_VISIBILITY();
     },
     openPayForm(formValues) {
       this.deliveryFormValues = formValues;

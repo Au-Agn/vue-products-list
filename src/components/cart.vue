@@ -32,7 +32,7 @@
           <button
             class="button btn-add"
             :class="{ disabled: CART.length === 0 }"
-            @click="showOrderPage"
+            @click="showOrderingPage"
           >
             Proceed to checkout
           </button>
@@ -74,6 +74,7 @@ export default {
       "DELETE_PRODUCT_FROM_CART",
       "INCREMENT_CART_ITEM",
       "DECREMENT_CART_ITEM",
+      "CHANGE_FORM_VISIBILITY"
     ]),
     deleteFromCart(index) {
       this.DELETE_PRODUCT_FROM_CART(index);
@@ -85,7 +86,7 @@ export default {
       this.DECREMENT_CART_ITEM(index);
     },
     showOrderingPage() {
-      this.changeFormVisibility();
+      this.CHANGE_FORM_VISIBILITY();
     },
   },
 };
